@@ -15,7 +15,7 @@ import pandas as pd
 import pandas_datareader.data as web
 
 # site pra pegar os tickers das acoes do ibov https://finance.yahoo.com/quote/JSLG3.SA?p=JSLG3.SA&.tsrc=fin-srch
-bov = web.DataReader('LLIS3.SA','yahoo',dt.datetime(2019,1,1),dt.datetime(2019,11,30))
+bov = web.DataReader('XPML13.SA','yahoo',dt.datetime(2019,1,1),dt.datetime(2019,12,15))
 
 bov['100ma'] = bov['Adj Close'].rolling(window = 100, min_periods = 0).mean()
 
