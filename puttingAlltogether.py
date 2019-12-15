@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Dec 15 10:32:13 2019
+Created on Sun Dec 15 14:12:02 2019
 
 @author: itamar
 """
@@ -11,9 +11,12 @@ import pickle
 import datetime as dt
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
+from matplotlib import style
 import pandas_datareader as web
 import requests
 #First of all you need to find a site with the table list of the b3 companies
+style.use('ggplot')
 
 def save_B3_tickers():
     tickers = []
@@ -56,6 +59,7 @@ def get_data_from_yahoo(reload_b3 = False):
         df = pd.DataFrame()
         if not os.path.exists('stock_dfs/{}.csv'.format(ticker)):
             try:
+                #tem que botar pra ele nao salvar os arquivos vazios
                 df = web.DataReader(ticker + '.SA','yahoo',start,end)
             except:
                 print('No data for {}'.format(ticker))
@@ -64,4 +68,33 @@ def get_data_from_yahoo(reload_b3 = False):
         else:
             print('Already have {}'.format(ticker))
             
-get_data_from_yahoo()
+def compile_data():
+    with open("bovtickers.pickle","rb") as f:
+        tickers = pickle.load(f)
+        
+    main_df = pd.DataFrame()
+        
+    for count, ticker in enumerate(tickers):
+        try:
+            df = pd.read_csv('stock_dfs/{}.csv'.format(ticker))
+            df.set_index('Date', inplace = True)
+        except:
+            print('no data for {}'.format(ticker))
+            continue
+        df.rename(columns = {'Adj Close':ticker}, inplace = True)
+        df.drop(['Open','High','Low','Close','Volume'],1,inplace = True)
+        
+        if main_df.empty:
+            main_df = df
+        else:
+            main_df = main_df.join(df,how = 'outer')
+            
+        if count % 10 == 0:
+            print(count)
+            
+    print(main_df.head())
+    main_df.to_csv('bovespa.csv')
+
+
+compile_data()
+dataset = pd.read_csv('bovespa.csv',index_col = 0)
