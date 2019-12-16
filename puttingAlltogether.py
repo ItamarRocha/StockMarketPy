@@ -32,7 +32,8 @@ def save_B3_tickers():
             if not ticker.endswith('L') and not ticker.endswith('B'):
                 print(ticker)
                 tickers.append(ticker)
-                
+    
+    tickers.sort()
     with open ("bovtickers.pickle","wb") as f:
         pickle.dump(tickers,f)
         print(tickers,'ta dando certo mzra')
@@ -43,7 +44,7 @@ def save_B3_tickers():
 
 def get_data_from_yahoo(reload_b3 = False):
     if reload_b3:
-        save_B3_tickers()
+        tickers = save_B3_tickers()
     else:
         with open("bovtickers.pickle", "rb") as f:
             tickers = pickle.load(f)
@@ -95,6 +96,6 @@ def compile_data():
     print(main_df.head())
     main_df.to_csv('bovespa.csv')
 
-
+get_data_from_yahoo(reload_b3=True)
 compile_data()
 dataset = pd.read_csv('bovespa.csv',index_col = 0)
