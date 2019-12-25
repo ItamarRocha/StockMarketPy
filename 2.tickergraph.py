@@ -17,9 +17,9 @@ import pandas_datareader.data as web
 style.use('ggplot')
 
 start = dt.datetime(2000,1,1)
-end = dt.datetime(2019,12,13)
+end = dt.datetime(2019,12,22)
 
-df = web.DataReader('LLIS3.SA','yahoo',start,end)
+df = web.DataReader('JHSF3.SA','yahoo',start,end)
 
 #df.to_csv('tsla.csv')
 

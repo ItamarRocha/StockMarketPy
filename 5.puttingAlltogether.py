@@ -43,6 +43,7 @@ def save_B3_tickers():
 #save_B3_tickers()
 
 def get_data_from_yahoo(reload_b3 = False):
+    real_tickers = []
     if reload_b3:
         tickers = save_B3_tickers()
     else:
@@ -53,7 +54,7 @@ def get_data_from_yahoo(reload_b3 = False):
         os.makedirs('stock_dfs')
     
     start = dt.datetime(2000,1,1)
-    end = dt.datetime(2019,12,15)
+    end = dt.datetime(2019,12,22)
     
     for ticker in tickers:
         print(ticker)
@@ -61,14 +62,20 @@ def get_data_from_yahoo(reload_b3 = False):
         if not os.path.exists('stock_dfs/{}.csv'.format(ticker)):
             try:
                 #tem que botar pra ele nao salvar os arquivos vazios
+                print('tentativas ', ticker)
                 df = web.DataReader(ticker + '.SA','yahoo',start,end)
+                real_tickers.append(ticker)
             except:
                 print('No data for {}'.format(ticker))
                 
             df.to_csv('stock_dfs/{}.csv'.format(ticker))
         else:
             print('Already have {}'.format(ticker))
-            
+        
+    with open ("bovtickers.pickle","wb") as f:
+        pickle.dump(real_tickers,f)
+        
+        
 def compile_data():
     with open("bovtickers.pickle","rb") as f:
         tickers = pickle.load(f)
