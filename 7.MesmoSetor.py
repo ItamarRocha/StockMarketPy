@@ -98,7 +98,7 @@ def get_data_from_advfn_fundamentals(reload_fund = False):
     url2 = '/fundamentos/individualizado/'
     
     df = pd.read_csv('transporte.csv',index_col = 0)
-    
+    #dataset_final = pd.DataFrame()
     ano = 2011
     
     for name,ticker in zip(web,tickers):
@@ -106,40 +106,66 @@ def get_data_from_advfn_fundamentals(reload_fund = False):
             for tri in trimestres:
                 site = url1 + name + url2 + str(ano) + tri
                 #print(site)
-                print(ticker)
+                print(ticker, tri)
                 resp = requests.get(site)
                 
                 dfs = pd.read_html(resp.text)
                 if i == 0 and tri == '/primeiro-trimestre':
                     try:
-                        valor_de_mercado = dfs[0].iloc[:,0:2]
-                        resultados = dfs[1].iloc[:,0:2]
-                        patrimonio = dfs[2].iloc[:,0:2]
-                        caixa = dfs[3].iloc[:,0:2]
-                        divida = dfs[4].iloc[:,0:2]
-                        liquidezNsolvencia = dfs[5].iloc[:,0:2]
-                        fluxo_de_caixa = dfs[6].iloc[:,0:2]
-                        investimentos = dfs[7].iloc[:,0:2]
-                        dividendos = dfs[8].iloc[:,0:2]
+                        valor_de_mercado = dfs[0].iloc[:,0:2].T
+                        resultados = dfs[1].iloc[:,0:2].T
+                        patrimonio = dfs[2].iloc[:,0:2].T
+                        caixa = dfs[3].iloc[:,0:2].T
+                        divida = dfs[4].iloc[:,0:2].T
+                        liquidezNsolvencia = dfs[5].iloc[:,0:2].T
+                        fluxo_de_caixa = dfs[6].iloc[:,0:2].T
+                        investimentos = dfs[7].iloc[:,0:2].T
+                        dividendos = dfs[8].iloc[:,0:2].T
                     except:
                         print('end of data')
                 else :
                     try:
-                        valor_de_mercado = valor_de_mercado.append(dfs[0].iloc[:,1].values)
-                        resultados = resultados.append(dfs[1].iloc[:,0:2])
-                        patrimonio = patrimonio.append(dfs[2].iloc[:,0:2])
-                        caixa = caixa.append(dfs[3].iloc[:,0:2])
-                        divida = divida.append(dfs[4].iloc[:,0:2])
-                        liquidezNsolvencia = liquidezNsolvencia.append(dfs[5].iloc[:,0:2])
-                        fluxo_de_caixa = fluxo_de_caixa.append(dfs[6].iloc[:,0:2])
-                        investimentos = investimentos.append(dfs[7].iloc[:,0:2])
-                        dividendos = dividendos.append(dfs[8].iloc[:,0:2])
+                        valor_de_mercado = valor_de_mercado.append(dfs[0].iloc[:,1].T)
+                        resultados = resultados.append(dfs[1].iloc[:,1].T)
+                        patrimonio = patrimonio.append(dfs[2].iloc[:,1].T)
+                        caixa = caixa.append(dfs[3].iloc[:,1].T)
+                        divida = divida.append(dfs[4].iloc[:,1].T)
+                        liquidezNsolvencia = liquidezNsolvencia.append(dfs[5].iloc[:,1].T)
+                        fluxo_de_caixa = fluxo_de_caixa.append(dfs[6].iloc[:,1].T)
+                        investimentos = investimentos.append(dfs[7].iloc[:,1].T)
+                        dividendos = dividendos.append(dfs[8].iloc[:,1].T)
                     except:
                         print('end of data')
                 
             ano = ano + 1
-            
-    
+        valor_de_mercado.columns = valor_de_mercado.iloc[0,:]
+        valor_de_mercado.drop('Unnamed: 0', inplace = True)
+        valor_de_mercado.drop(columns = ['Última Cotação ON','Última Cotação PN'], inplace = True)
+        valor_de_mercado.drop(1, inplace = True)
+        resultados.columns = resultados.iloc[0,:]
+        resultados.drop('Unnamed: 0', inplace = True)
+        patrimonio.columns = patrimonio.iloc[0,:]
+        patrimonio.drop('Unnamed: 0', inplace = True)
+        caixa.columns = caixa.iloc[0,:]
+        caixa.drop('Unnamed: 0', inplace = True)
+        divida.columns = divida.iloc[0,:]
+        divida.drop('Unnamed: 0', inplace = True)
+        liquidezNsolvencia.columns =liquidezNsolvencia.iloc[0,:]
+        liquidezNsolvencia.drop('Unnamed: 0', inplace = True)
+        fluxo_de_caixa.columns = fluxo_de_caixa.iloc[0,:]
+        fluxo_de_caixa.drop('Unnamed: 0', inplace = True)
+        investimentos.columns = investimentos.iloc[0,:]
+        investimentos.drop('Unnamed: 0', inplace = True)
+        dividendos.columns = dividendos.iloc[0,:]
+        dividendos.drop('Unnamed: 0', inplace = True)
+        dataset_final = valor_de_mercado
+        dataset_final = dataset_final.join(resultados).join(patrimonio).join(caixa)
+        dataset_final = dataset_final.join(divida).join(liquidezNsolvencia).join(fluxo_de_caixa)
+        dataset_final = dataset_final.join(investimentos).join(dividendos)
+        
+        #df.loc[(df['ticker'] == ticker) & (df[''])]
+        
+        
 get_data_from_yahoo(reload_b3=True)
 compile_data()
 dataset = pd.read_csv('transporte.csv',index_col = 0)
