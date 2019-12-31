@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Dec 30 08:52:00 2019
-
-@author: itamar
-"""
 import bs4 as bs
 import pickle
 import datetime as dt
@@ -252,23 +245,3 @@ def preprocessed_dataframe():
     
     return train_test,prediction
         
-        # qtr é 2 mas eu quero colocar o primeiro
-"""
-for qtr , year in zip(df['Qtr'], df.index):
-    for date,tic in zip(dataset_final.index,tickers):
-        print(qtr , year ,"-------", date , tic)
-        #try:#if find(str(qtr - 1),date[0:1]) != -1 and find(pd.to_datetime(year).year,date[2:7]) != -1:
-        #df[tic == ticker and str(qtr + 1) == date[0:1] and pd.to_datetime(year).year == pd.to_datetime(date[3:7]).year] = df.join(dataset_final.loc[[str(date)]])
-        mask = tic == ticker and str(qtr + 1) == date[0:1] and pd.to_datetime(year).year == pd.to_datetime(date[3:7]).year 
-        df = (df.append(pd.DataFrame(dataset_final.loc[dataset_final.index == date,['Giro Ativos']])).values)               
-"""
-#df[df['ticker'] == ticker] = df.join(dataset_final) 
-#df = df.join(dataset_final) 
-
-                
-#get_data_from_yahoo(reload_b3=True)
-#transport_tickers_save()
-#df = compiled_dataframe()
-#df.to_csv('data.csv')
-#dataset = pd.read_csv('data.csv',index_col = 0,low_memory= False)
-train_test,prediction = preprocessed_dataframe()
