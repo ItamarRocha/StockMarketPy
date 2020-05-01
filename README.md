@@ -31,10 +31,10 @@ pip install mpl_finance
 ### Description
 
 * #### 1.serchNplot.py
-This script is responsible for plotting graphs using only matplotlib
+This script is responsible for plotting graphs using only matplotlib.
 
 * #### 2.tickergraph.py
-Plots the time series data of a stock in candlestick format, using mpl_finance library
+Plots the time series data of a stock in candlestick format, using mpl_finance library.
 
 * #### 3.gettingTickers.py
 Gets all the tickers of brazilian stock market through this [site](https://br.advfn.com/bolsa-de-valores/bovespa/A) using beautiful soup and dumps a pickle archive with the stocks tickers.
@@ -46,9 +46,10 @@ Responsible for gathering the data specified by the tickers in the yahoo finance
 Gathers all the stocks closing prices into one dataframe.
 
 * #### 6.Correlation.py
-After executing the last script, it plots the correlation between each stock
+After executing the last script, it plots the correlation between each stock.
 
-* #### 7.
+* #### Work_in_progress
+Folder with drafts and attempts that werent really sucessfull yet, and are not documented well.
 
 ### License
 
