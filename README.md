@@ -1,5 +1,5 @@
 # StockMarketPy
-[![author](https://img.shields.io/badge/author-ItamarRocha-red.svg)](https://github.com/ItamarRocha) 
+[![author](https://img.shields.io/badge/author-ItamarRocha-black.svg)](https://github.com/ItamarRocha) 
 ![Logo](images/lmf-logo.png)
 
 > Repository to learn the basics of algo trading and IA in (Brazilian stock market)
