@@ -5,23 +5,16 @@ Created on Sun Dec 15 14:53:22 2019
 
 @author: itamar
 """
-import bs4 as bs
-import pickle
-import datetime as dt
 import pandas as pd
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
-import pandas_datareader as web
-import requests
+
 
 style.use('ggplot')
 
 def visualize_data():
     df = pd.read_csv('bovespa.csv',index_col=0)
-##    df['LLIS3'].plot()
-##    plt.show()
     df_corr = df.corr()
     print(df_corr.head())
     

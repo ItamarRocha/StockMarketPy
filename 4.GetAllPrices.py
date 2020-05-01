@@ -5,14 +5,13 @@ Created on Sun Dec 15 10:32:13 2019
 
 @author: itamar
 """
-
-import bs4 as bs
 import pickle
 import datetime as dt
 import pandas as pd
 import os
 import pandas_datareader as web
 import requests
+import bs4 as bs
 #First of all you need to find a site with the table list of the b3 companies
 
 def save_B3_tickers():
@@ -26,17 +25,15 @@ def save_B3_tickers():
         for row in table.findAll('tr')[1:]:
             ticker = row.findAll('td')[1].text
             
-            if not ticker.endswith('L') and not ticker.endswith('B'):
+            if not ticker.endswith('L') and not ticker.endswith('B') and not len(ticker) > 6:
                 print(ticker)
                 tickers.append(ticker)
                 
     with open ("bovtickers.pickle","wb") as f:
         pickle.dump(tickers,f)
-        print(tickers,'ta dando certo mzra')
+        print(tickers)
     
     return tickers
-        
-#save_B3_tickers()
 
 def get_data_from_yahoo(reload_b3 = False):
     if reload_b3:
@@ -49,7 +46,7 @@ def get_data_from_yahoo(reload_b3 = False):
         os.makedirs('stock_dfs')
     
     start = dt.datetime(2000,1,1)
-    end = dt.datetime(2019,12,15)
+    end = dt.datetime(2020,4,30)
     
     for ticker in tickers:
         print(ticker)

@@ -29,18 +29,15 @@ def save_B3_tickers():
         for row in table.findAll('tr')[1:]:
             ticker = row.findAll('td')[1].text
             
-            if not ticker.endswith('L') and not ticker.endswith('B'):
+            if not ticker.endswith('L') and not ticker.endswith('B') and not len(ticker) > 6:
                 print(ticker)
                 tickers.append(ticker)
-    
-    tickers.sort()
+                
     with open ("bovtickers.pickle","wb") as f:
         pickle.dump(tickers,f)
-        print(tickers,'ta dando certo mzra')
+        print(tickers)
     
     return tickers
-        
-#save_B3_tickers()
 
 def get_data_from_yahoo(reload_b3 = False):
     real_tickers = []

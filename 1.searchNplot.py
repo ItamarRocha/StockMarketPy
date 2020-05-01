@@ -8,10 +8,6 @@ Created on Tue Dec 10 20:13:03 2019
 
 import datetime as dt
 import matplotlib.pyplot as plt
-from matplotlib import style
-from mpl_finance import candlestick_ohlc
-import matplotlib.dates as mdates
-import pandas as pd
 import pandas_datareader.data as web
 
 # site pra pegar os tickers das acoes do ibov https://finance.yahoo.com/quote/JSLG3.SA?p=JSLG3.SA&.tsrc=fin-srch
