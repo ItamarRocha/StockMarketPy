@@ -19,6 +19,35 @@ def transport_tickers_save():
     
     return tickers
 
+def save_B3_tickers():
+    for i in range (24):
+        site = 'https://br.advfn.com/bolsa-de-valores/bovespa/'
+        site = site + chr(ord('A')+i)
+        resp = requests.get(site)
+        soup = bs.BeautifulSoup(resp.text,'lxml')
+        table = soup.find('table',{'class':'atoz-link-bov'})
+        tickers = []
+        for row in table.findAll('tr')[1:]:
+            ticker = row.findAll('td')[1].text
+            print(ticker)
+            tickers.append(ticker)
+    with open ("bovtickers.pickle","wb") as f:
+        pickle.dump(tickers,f)
+    
+    return tickers
+        
+"""
+def save_web_names():
+for i in range (24):
+    site = 'https://br.advfn.com/bolsa-de-valores/bovespa/'
+    site = site + chr(ord('A')+i)
+    resp = requests.get(site)
+    soup = bs.BeautifulSoup(resp.text,'lxml')
+    web = []
+    for url in soup.find_all('a'):
+        str = str + "\n" + url.get('href')
+    str.find('//br.advfn.com/bolsa-de-valores/bovespa/')
+"""
 def get_data_from_yahoo(reload_b3 = False):
     if reload_b3:
         tickers = transport_tickers_save()
