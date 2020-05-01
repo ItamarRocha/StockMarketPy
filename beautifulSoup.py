@@ -10,7 +10,7 @@ import bs4 as bs
 import pickle
 import pandas as pd
 #url = 'https://www.fundamentus.com.br/resultado.php?setor=27'
-url = 'https://br.advfn.com/bolsa-de-valores/bovespa/jslg-on-JSLG3/fundamentos/individualizado/2019/primeiro-trimestre'
+url = 'https://br.advfn.com/bolsa-de-valores/bovespa'
 resp = requests.get(url)
 #print(resp.text)
 
@@ -19,8 +19,8 @@ resp = requests.get(url)
 #print(soup)
 
 # pra conseguir todos os links
-#for url in soup.find_all('a'):
-#    print(url.get('href')) 
+for url in soup.find_all('a'):
+    print(url.get('href')) 
 
 #nav = soup.nav
 #for url in nav.find_all('a'):
