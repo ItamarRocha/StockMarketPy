@@ -37,7 +37,7 @@ This script is responsible for plotting graphs using only matplotlib
 Plots the time series data of a stock in candlestick format, using mpl_finance library
 
 * #### 3.gettingTickers.py
-Gets all the tickers of brazilian stock market through this [site](https://br.advfn.com/bolsa-de-valores/bovespa/) using beautiful soup and dumps a pickle archive with the stocks tickers.
+Gets all the tickers of brazilian stock market through this [site](https://br.advfn.com/bolsa-de-valores/bovespa/A) using beautiful soup and dumps a pickle archive with the stocks tickers.
 
 * #### 4.GetAllPrices.py
 Responsible for gathering the data specified by the tickers in the yahoo finances api. It gets the Min, Max, Open, High, Close and Adj. Close since 01/01/2000 till the day specified in the code and stores the data in a folder named stock_dfs.
@@ -48,6 +48,7 @@ Gathers all the stocks closing prices into one dataframe.
 * #### 6.Correlation.py
 After executing the last script, it plots the correlation between each stock
 
+* #### 7.
 
 ### License
 
