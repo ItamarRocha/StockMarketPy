@@ -6,27 +6,37 @@ Created on Wed May  6 11:46:36 2020
 @author: itamar
 """
 
-import bs4 as bs
-import pandas_datareader as web
-import requests
 from selenium import webdriver
+import time
 
-options = webdriver.ChromeOptions()
-options.add_argument('--ignore-certificate-errors')
-options.add_argument('--incognito') #private
-#options.add_argument('--headless') # doesnt open page
+class B3:
+    def __init__(self):
+        self.bot = webdriver.Firefox()
 
-browser = webdriver.Chrome('/home/itamar/Desktop/chromedriver', chrome_options=options)
+    def start(self):
+        bot = self.bot
+        bot.get('http://www.b3.com.br/pt_br/produtos-e-servicos/negociacao/renda-variavel/empresas-listadas.htm')
+        time.sleep(2)
 
-site = 'http://www.b3.com.br/pt_br/produtos-e-servicos/negociacao/renda-variavel/empresas-listadas.htm'
+        iframe = bot.find_element_by_xpath('//iframe[@id="bvmf_iframe"]')
+        bot.switch_to.frame(iframe)
+        bot.implicitly_wait(30)
 
-browser.get(site)
+        tab = bot.find_element_by_xpath('//a[@id="ctl00_contentPlaceHolderConteudo_tabMenuEmpresaListada_tabSetor"]')
+        time.sleep(3)
+        tab.click()
+        time.sleep(2)
+        
+        links = []
+        elems = bot.find_elements_by_tag_name('a')
+        for elem in elems:
+            href = elem.get_attribute('href')
+            if href is not None:
+                links.append(href)
+        link1 = elems[7]
+        link1.click()
+        bot.find_element_by_link_text('Material de Transporte')
 
-xml = requests.get(site)
-soup = bs.BeautifulSoup(xml.text,'lxml')
-
-with open('html.txt',"w") as f:
-    f.write(str(soup))
-    
-
-elem = browser.find_element_by_class_name("levelwrap level1")
+if __name__ == "__main__":
+    worker = B3()
+    worker.start()
