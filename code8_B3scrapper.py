@@ -8,8 +8,7 @@ Created on Wed May  6 11:46:36 2020
 
 from selenium import webdriver
 import time
-import bs4 as bs
-import requests
+import pandas as pd
 
 class B3:
     def __init__(self):
@@ -68,6 +67,9 @@ class B3:
         #dfp.click()
         
         bot.get(data_site)
+        relatory_iframe = bot.find_element_by_xpath('//iframe[@id="iFrameFormulariosFilho"]')
+        bot.switch_to.frame(relatory_iframe)#change frame
+        dfs = pd.read_html(bot.page_source,index_col = 0,header = 0)
         
         
 if __name__ == "__main__":
